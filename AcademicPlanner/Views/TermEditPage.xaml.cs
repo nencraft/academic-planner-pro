@@ -103,7 +103,7 @@ public partial class TermEditPage : ContentPage
         if (!confirm)
             return;
 
-        await _database.DeleteTermAsync(term);
+        await _database.DeleteTermCascadeAsync(_termId);
         await Shell.Current.GoToAsync("..");
     }
 

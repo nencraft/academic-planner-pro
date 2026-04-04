@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="AcademicPlanner.Views.TermOverviewPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:models="clr-namespace:AcademicPlanner.Models"
+    BackgroundColor="#EFEFEF"
+    Shell.NavBarIsVisible="False">
+
+    <Grid RowDefinitions="Auto,Auto,Auto,*,Auto">
+
+        <Grid
+            Grid.Row="0"
+            Padding="16,12,16,8"
+            BackgroundColor="White"
+            ColumnDefinitions="56,*,56"
+            ColumnSpacing="16">
+
+            <ImageButton
+                Grid.Column="0"
+                Margin="0"
+                Padding="0"
+                Aspect="AspectFit"
+                BackgroundColor="Transparent"
+                Clicked="OnBackClicked"
+                HeightRequest="48"
+                HorizontalOptions="Center"
+                Source="icon_back.png"
+                VerticalOptions="Center"
+                WidthRequest="48" />
+
+            <ImageButton
+                Grid.Column="1"
+                Padding="0"
+                Aspect="AspectFit"
+                BackgroundColor="Transparent"
+                Clicked="OnHomeClicked"
+                HeightRequest="56"
+                HorizontalOptions="Center"
+                Source="wgu_owl.png"
+                VerticalOptions="Center"
+                WidthRequest="56" />
+
+            <ImageButton
+                Grid.Column="2"
+                Padding="0"
+                Aspect="AspectFit"
+                BackgroundColor="Transparent"
+                Clicked="OnEditTermClicked"
+                HeightRequest="48"
+                HorizontalOptions="Center"
+                Source="icon_edit.png"
+                VerticalOptions="Center"
+                WidthRequest="48" />
+        </Grid>
+
+        <Border
+            Grid.Row="1"
+            Padding="0,8"
+            BackgroundColor="#002f51"
+            StrokeThickness="0">
+            
+            <VerticalStackLayout Spacing="2">
+                <Label
+                    x:Name="TermTitleLabel"
+                    FontSize="22"
+                    HorizontalOptions="Center"
+                    HorizontalTextAlignment="Center"
+                    Text="Term Overview"
+                    FontAttributes="Bold"
+                    TextColor="White" />
+                <Label
+                    x:Name="TermDatesLabel"
+                    FontSize="14"
+                    HorizontalOptions="Center"
+                    HorizontalTextAlignment="Center"
+                    Text="StartDate - EndDate"
+                    TextColor="White" />
+            </VerticalStackLayout>
+        </Border>
+        <Button
+            Grid.Row="2"
+            Margin="0,16,0,8"
+            BackgroundColor="#F5F5F5"
+            BorderColor="Black"
+            BorderWidth="2"
+            Clicked="OnAddCourseClicked"
+            CornerRadius="16"
+            FontSize="16"
+            HeightRequest="58"
+            HorizontalOptions="Center"
+            ImageSource="icon_add.png"
+            Text="Add Course"
+            TextColor="Black"
+            WidthRequest="220" />
+
+        <CollectionView
+            x:Name="CoursesCollectionView"
+            Grid.Row="3"
+            Margin="0,8,0,0"
+            SelectionMode="None">
+
+            <CollectionView.EmptyView>
+                <VerticalStackLayout Padding="24,32" Spacing="12">
+                    <Label
+                        FontSize="24"
+                        HorizontalOptions="Center"
+                        Text="No courses yet" />
+                    <Label
+                        FontSize="16"
+                        HorizontalOptions="Center"
+                        Text="Tap the plus icon to add a course." />
+                </VerticalStackLayout>
+            </CollectionView.EmptyView>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:Course">
+                    <Grid Padding="0,12">
+                        <Border
+                            Padding="16"
+                            BackgroundColor="#F5F5F5"
+                            HorizontalOptions="Center"
+                            StrokeThickness="0"
+                            WidthRequest="420">
+                            <Border.Shadow>
+                                <Shadow
+                                    Brush="#33000000"
+                                    Opacity="1"
+                                    Radius="10"
+                                    Offset="0,4" />
+                            </Border.Shadow>
+
+                            <Grid ColumnDefinitions="*,70">
+
+                                <VerticalStackLayout
+                                    Grid.Column="0"
+                                    HorizontalOptions="Center"
+                                    Spacing="4"
+                                    VerticalOptions="Center">
+                                    <Label
+                                        FontAttributes="Bold"
+                                        FontSize="24"
+                                        HorizontalTextAlignment="Center"
+                                        Text="{Binding Title}"
+                                        TextColor="Black" />
+
+                                    <Label
+                                        FontSize="16"
+                                        HorizontalTextAlignment="Center"
+                                        Text="{Binding Status}"
+                                        TextColor="Black" />
+                                </VerticalStackLayout>
+
+                                <ImageButton
+                                    Grid.Column="1"
+                                    Aspect="AspectFit"
+                                    BackgroundColor="Transparent"
+                                    Clicked="OnCourseSelectedClicked"
+                                    CommandParameter="{Binding Id}"
+                                    HeightRequest="56"
+                                    HorizontalOptions="Center"
+                                    Source="icon_expand.png"
+                                    VerticalOptions="Center"
+                                    WidthRequest="56" />
+
+                            </Grid>
+                        </Border>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <Button
+            Grid.Row="4"
+            Margin="0,12,0,20"
+            BackgroundColor="#F5F5F5"
+            BorderColor="Black"
+            BorderWidth="2"
+            Clicked="OnDeleteTermClicked"
+            CornerRadius="16"
+            FontSize="16"
+            HeightRequest="58"
+            HorizontalOptions="Center"
+            ImageSource="icon_delete.png"
+            Text="Delete Term"
+            TextColor="Black"
+            WidthRequest="220" />
+
+    </Grid>
+</ContentPage>

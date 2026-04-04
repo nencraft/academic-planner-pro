@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="AcademicPlanner.Views.AssessmentEditPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    BackgroundColor="#EFEFEF"
+    Shell.NavBarIsVisible="False">
+
+    <Grid RowDefinitions="Auto,Auto,*">
+
+        <Grid
+            Grid.Row="0"
+            Padding="16,12,16,8"
+            BackgroundColor="White"
+            ColumnDefinitions="56,*,56"
+            ColumnSpacing="16">
+
+            <ImageButton
+                Grid.Column="0"
+                Padding="0"
+                Aspect="AspectFit"
+                BackgroundColor="Transparent"
+                Clicked="OnBackClicked"
+                HeightRequest="48"
+                HorizontalOptions="Center"
+                Source="icon_back.png"
+                VerticalOptions="Center"
+                WidthRequest="48" />
+
+            <ImageButton
+                Grid.Column="1"
+                Padding="0"
+                Aspect="AspectFit"
+                BackgroundColor="Transparent"
+                Clicked="OnHomeClicked"
+                HeightRequest="56"
+                HorizontalOptions="Center"
+                Source="wgu_owl.png"
+                VerticalOptions="Center"
+                WidthRequest="56" />
+
+
+        </Grid>
+
+        <Border
+            Grid.Row="1"
+            Padding="0,10"
+            BackgroundColor="#002f51"
+            StrokeThickness="0">
+            <Label
+                x:Name="BannerTitleLabel"
+                FontSize="22"
+                HorizontalOptions="Center"
+                Text="Add Assessment"
+                TextColor="White"
+                FontAttributes="Bold"
+                VerticalOptions="Center" />
+        </Border>
+
+        <ScrollView Grid.Row="2">
+            <VerticalStackLayout Padding="28,36,28,40" Spacing="22">
+
+                <Grid
+                    ColumnDefinitions="Auto,*"
+                    ColumnSpacing="12"
+                    RowSpacing="12"
+                    RowDefinitions="Auto,Auto,Auto,Auto,Auto">
+
+                    <Label
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        FontSize="20"
+                        HorizontalTextAlignment="End"
+                        Text="Assessment Title:"
+                        VerticalTextAlignment="Center" />
+
+                    <Border
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        BackgroundColor="#F5F5F5"
+                        HeightRequest="54"
+                        Stroke="Black"
+                        StrokeThickness="1">
+                        <Entry
+                            x:Name="TitleEntry"
+                            BackgroundColor="Transparent"
+                            ClearButtonVisibility="WhileEditing"
+                            FontSize="18"
+                            Placeholder="Text box" />
+                    </Border>
+
+                    <Label
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        FontSize="20"
+                        HorizontalTextAlignment="End"
+                        Text="Start Date:"
+                        VerticalTextAlignment="Center" />
+
+                    <Border
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        BackgroundColor="#F5F5F5"
+                        HeightRequest="54"
+                        Stroke="Black"
+                        StrokeThickness="1">
+                        <DatePicker
+                            x:Name="StartDatePicker"
+                            BackgroundColor="Transparent"
+                            FontSize="18"
+                            Format="MM/dd/yyyy" />
+                    </Border>
+
+                    <Label
+                        Grid.Row="2"
+                        Grid.Column="0"
+                        FontSize="20"
+                        HorizontalTextAlignment="End"
+                        Text="End Date:"
+                        VerticalTextAlignment="Center" />
+
+                    <Border
+                        Grid.Row="2"
+                        Grid.Column="1"
+                        BackgroundColor="#F5F5F5"
+                        HeightRequest="54"
+                        Stroke="Black"
+                        StrokeThickness="1">
+                        <DatePicker
+                            x:Name="EndDatePicker"
+                            BackgroundColor="Transparent"
+                            FontSize="18"
+                            Format="MM/dd/yyyy" />
+                    </Border>
+
+                    <Label
+                        Grid.Row="3"
+                        Grid.Column="0"
+                        FontSize="20"
+                        HorizontalTextAlignment="End"
+                        Text="Assessment Type:"
+                        VerticalTextAlignment="Center" />
+
+                    <Border
+                        Grid.Row="3"
+                        Grid.Column="1"
+                        BackgroundColor="#F5F5F5"
+                        HeightRequest="54"
+                        Stroke="Black"
+                        StrokeThickness="1">
+                        <Picker
+                            x:Name="AssessmentTypePicker"
+                            Title="Select type"
+                            BackgroundColor="Transparent"
+                            FontSize="18">
+                            <Picker.ItemsSource>
+                                <x:Array Type="{x:Type x:String}">
+                                    <x:String>Objective</x:String>
+                                    <x:String>Performance</x:String>
+                                </x:Array>
+                            </Picker.ItemsSource>
+                        </Picker>
+                    </Border>
+
+                    <Label
+                        Grid.Row="4"
+                        Grid.Column="0"
+                        FontSize="20"
+                        HorizontalTextAlignment="End"
+                        Text="Set Alert:"
+                        VerticalTextAlignment="Center" />
+
+                    <Border
+                        Grid.Row="4"
+                        Grid.Column="1"
+                        BackgroundColor="#F5F5F5"
+                        HeightRequest="54"
+                        Stroke="Black"
+                        StrokeThickness="1">
+                        <Picker
+                            x:Name="AlertSettingPicker"
+                            Title="Select alert setting"
+                            BackgroundColor="Transparent"
+                            FontSize="18">
+                            <Picker.ItemsSource>
+                                <x:Array Type="{x:Type x:String}">
+                                    <x:String>None</x:String>
+                                    <x:String>Start</x:String>
+                                    <x:String>End</x:String>
+                                    <x:String>Start and End</x:String>
+                                </x:Array>
+                            </Picker.ItemsSource>
+                        </Picker>
+                    </Border>
+                </Grid>
+
+                <Grid
+                    Margin="0,24,0,0"
+                    ColumnDefinitions="*,*"
+                    ColumnSpacing="16"
+                    HorizontalOptions="Fill">
+
+                    <Button
+                        Grid.Column="0"
+                        Padding="12,0"
+                        BackgroundColor="#F5F5F5"
+                        BorderColor="Black"
+                        BorderWidth="1"
+                        Clicked="OnSaveClicked"
+                        CornerRadius="16"
+                        FontSize="16"
+                        HeightRequest="58"
+                        HorizontalOptions="Fill"
+                        ImageSource="icon_save.png"
+                        Text="Save"
+                        TextColor="Black" />
+
+                    <Button
+                        Grid.Column="1"
+                        Padding="12,0"
+                        BackgroundColor="#F5F5F5"
+                        BorderColor="Black"
+                        BorderWidth="1"
+                        Clicked="OnCancelClicked"
+                        CornerRadius="16"
+                        FontSize="16"
+                        HeightRequest="58"
+                        HorizontalOptions="Fill"
+                        ImageSource="icon_cancel.png"
+                        Text="Cancel"
+                        TextColor="Black" />
+                </Grid>
+
+                <Button
+                    x:Name="DeleteButton"
+                    BackgroundColor="#F5F5F5"
+                    BorderColor="Black"
+                    BorderWidth="1"
+                    Clicked="OnDeleteClicked"
+                    CornerRadius="16"
+                    FontSize="16"
+                    HeightRequest="58"
+                    HorizontalOptions="Center"
+                    ImageSource="icon_delete.png"
+                    IsVisible="False"
+                    Text="Delete Assessment"
+                    TextColor="Black" />
+
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

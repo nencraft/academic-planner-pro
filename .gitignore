@@ -1,0 +1,17 @@
+# Visual Studio
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Build output
+**/bin/
+**/obj/
+
+# MAUI / local files
+*.csproj.user
+
+# OS junk
+.DS_Store
+Thumbs.db

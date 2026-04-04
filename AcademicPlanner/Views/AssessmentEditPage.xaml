@@ -86,7 +86,7 @@
                             BackgroundColor="Transparent"
                             ClearButtonVisibility="WhileEditing"
                             FontSize="18"
-                            Placeholder="Text box" />
+                            Placeholder="{StaticResource TitlePlaceholder}" />
                     </Border>
 
                     <Label

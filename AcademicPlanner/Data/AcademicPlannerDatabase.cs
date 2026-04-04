@@ -74,6 +74,12 @@ namespace AcademicPlanner.Data
             var courses = await GetCoursesByTermAsync(termId);
             foreach (var course in courses)
             {
+                var assessments = await GetAssessmentsByCourseAsync(course.Id);
+                foreach (var assessment in assessments)
+                {
+                    await _database!.DeleteAsync(assessment);
+                }
+
                 await _database!.DeleteAsync(course);
             }
 

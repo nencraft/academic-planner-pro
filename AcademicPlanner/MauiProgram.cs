@@ -26,6 +26,8 @@ public static class MauiProgram
         builder.Services.AddSingleton<AcademicPlannerDatabase>();
         builder.Services.AddSingleton<INotificationManagerService, AcademicPlanner.Platforms.Android.NotificationManagerService>();
         builder.Services.AddSingleton<SeedDataService>();
+        builder.Services.AddSingleton<HashingService>();
+        builder.Services.AddSingleton<AuthenticationService>();
 
         builder.Services.AddTransient<TermsPage>();
         builder.Services.AddTransient<TermEditPage>();
@@ -33,6 +35,8 @@ public static class MauiProgram
         builder.Services.AddTransient<CourseEditPage>();
         builder.Services.AddTransient<CourseOverviewPage>();
         builder.Services.AddTransient<AssessmentEditPage>();
+        builder.Services.AddTransient<SetupAccountPage>();
+        builder.Services.AddTransient<LoginPage>();
 
 
         return builder.Build();

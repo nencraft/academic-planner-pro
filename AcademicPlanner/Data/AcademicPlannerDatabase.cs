@@ -29,6 +29,7 @@ namespace AcademicPlanner.Data
             await _database.CreateTableAsync<Term>();
             await _database.CreateTableAsync<Course>();
             await _database.CreateTableAsync<Assessment>();
+            await _database.CreateTableAsync<AppUser>();
 
             _initialized = true;
         }
@@ -200,6 +201,37 @@ namespace AcademicPlanner.Data
             int assessmentCount = await _database!.Table<Assessment>().CountAsync();
 
             return termCount > 0 || courseCount > 0 || assessmentCount > 0;
+        }
+
+        // login auth
+        public async Task<bool> HasUserAsync()
+        {
+            await InitAsync();
+            return await _database!.Table<AppUser>().CountAsync() > 0;
+        }
+
+        public async Task<AppUser?> GetUserAsync()
+        {
+            await InitAsync();
+            return await _database!.Table<AppUser>().FirstOrDefaultAsync();
+        }
+
+        public async Task<AppUser?> GetUserByUsernameAsync(string username)
+        {
+            await InitAsync();
+            return await _database!
+                .Table<AppUser>()
+                .FirstOrDefaultAsync(u => u.Username == username);
+        }
+
+        public async Task<int> SaveUserAsync(AppUser user)
+        {
+            await InitAsync();
+
+            if (user.Id != 0)
+                return await _database!.UpdateAsync(user);
+
+            return await _database!.InsertAsync(user);
         }
     }
 }

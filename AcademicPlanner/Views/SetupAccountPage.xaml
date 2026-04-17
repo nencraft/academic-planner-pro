@@ -1,0 +1,31 @@
+<ContentPage
+    x:Class="AcademicPlanner.Views.SetupAccountPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Create Account">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="24" Spacing="16">
+            <Label
+                FontAttributes="Bold"
+                FontSize="28"
+                Text="Create Account" />
+
+            <Label FontSize="16" Text="Set up your Academic Planner account to continue." />
+
+            <Entry x:Name="UsernameEntry" Placeholder="Username" />
+
+            <Entry
+                x:Name="PasswordEntry"
+                IsPassword="True"
+                Placeholder="Password" />
+
+            <Entry
+                x:Name="ConfirmPasswordEntry"
+                IsPassword="True"
+                Placeholder="Confirm Password" />
+
+            <Button Clicked="OnCreateAccountClicked" Text="Create Account" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

@@ -1,0 +1,26 @@
+<ContentPage
+    x:Class="AcademicPlanner.Views.LoginPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Sign In">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="24" Spacing="16">
+            <Label
+                FontAttributes="Bold"
+                FontSize="28"
+                Text="Sign In" />
+
+            <Label FontSize="16" Text="Enter your username and password to continue." />
+
+            <Entry x:Name="UsernameEntry" Placeholder="Username" />
+
+            <Entry
+                x:Name="PasswordEntry"
+                IsPassword="True"
+                Placeholder="Password" />
+
+            <Button Clicked="OnSignInClicked" Text="Sign In" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

@@ -49,12 +49,12 @@
             StrokeThickness="0">
             <Label
                 x:Name="BannerTitleLabel"
+                FontAttributes="Bold"
                 FontSize="22"
                 HorizontalOptions="Center"
                 Text="Add Course"
                 TextColor="White"
-                VerticalOptions="Center"
-                FontAttributes="Bold"/>
+                VerticalOptions="Center" />
         </Border>
 
         <ScrollView Grid.Row="2">
@@ -63,8 +63,8 @@
                 <Grid
                     ColumnDefinitions="Auto,*"
                     ColumnSpacing="12"
-                    RowSpacing="12"
-                    RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto">
+                    RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto"
+                    RowSpacing="12">
 
                     <Label
                         Grid.Row="0"
@@ -152,16 +152,7 @@
                             x:Name="StatusPicker"
                             Title="Select status"
                             BackgroundColor="Transparent"
-                            FontSize="18">
-                            <Picker.ItemsSource>
-                                <x:Array Type="{x:Type x:String}">
-                                    <x:String>In Progress</x:String>
-                                    <x:String>Completed</x:String>
-                                    <x:String>Dropped</x:String>
-                                    <x:String>Plan to Take</x:String>
-                                </x:Array>
-                            </Picker.ItemsSource>
-                        </Picker>
+                            FontSize="18" />
                     </Border>
 
                     <Label
@@ -275,16 +266,7 @@
                             x:Name="AlertSettingPicker"
                             Title="Select alert setting"
                             BackgroundColor="Transparent"
-                            FontSize="18">
-                            <Picker.ItemsSource>
-                                <x:Array Type="{x:Type x:String}">
-                                    <x:String>None</x:String>
-                                    <x:String>Start</x:String>
-                                    <x:String>End</x:String>
-                                    <x:String>Start and End</x:String>
-                                </x:Array>
-                            </Picker.ItemsSource>
-                        </Picker>
+                            FontSize="18" />
                     </Border>
                 </Grid>
 

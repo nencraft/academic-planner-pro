@@ -19,6 +19,8 @@ public class SeedDataService
 
     public async Task SeedAsync()
     {
+        await SeedLookupOptionsAsync();
+
         if (await _database.HasAnyDataAsync())
             return;
 
@@ -69,5 +71,18 @@ public class SeedDataService
 
         await _database.SaveAssessmentAsync(objectiveAssessment);
         await _database.SaveAssessmentAsync(performanceAssessment);
+    }
+
+    private async Task SeedLookupOptionsAsync()
+    {
+        await _database.EnsureCourseStatusOptionAsync("In Progress", 1);
+        await _database.EnsureCourseStatusOptionAsync("Completed", 2);
+        await _database.EnsureCourseStatusOptionAsync("Dropped", 3);
+        await _database.EnsureCourseStatusOptionAsync("Plan to Take", 4);
+
+        await _database.EnsureAlertOptionAsync("None", 1);
+        await _database.EnsureAlertOptionAsync("Start", 2);
+        await _database.EnsureAlertOptionAsync("End", 3);
+        await _database.EnsureAlertOptionAsync("Start and End", 4);
     }
 }

@@ -11,6 +11,7 @@ public partial class CourseEditPage : ContentPage
 {
     private readonly AcademicPlannerDatabase _database;
     private readonly INotificationManagerService _notificationService;
+    private bool _optionsLoaded;
 
     private int _termId;
     private int _courseId;
@@ -53,6 +54,8 @@ public partial class CourseEditPage : ContentPage
 
     private async Task LoadCourseAsync()
     {
+        await EnsurePickerOptionsLoadedAsync();
+
         var course = await _database.GetCourseAsync(_courseId);
         if (course is null)
             return;
@@ -194,5 +197,24 @@ public partial class CourseEditPage : ContentPage
     private async void OnHomeClicked(object? sender, EventArgs e)
     {
         await Shell.Current.GoToAsync("//TermsPage");
+    }
+
+    private async Task EnsurePickerOptionsLoadedAsync()
+    {
+        if (_optionsLoaded)
+            return;
+
+        var statusOptions = await _database.GetCourseStatusOptionsAsync();
+        StatusPicker.ItemsSource = statusOptions.Select(o => o.Name).ToList();
+
+        var alertOptions = await _database.GetAlertOptionsAsync();
+        AlertSettingPicker.ItemsSource = alertOptions.Select(o => o.Name).ToList();
+
+        _optionsLoaded = true;
+    }
+    protected override async void OnAppearing()
+    {
+        base.OnAppearing();
+        await EnsurePickerOptionsLoadedAsync();
     }
 }

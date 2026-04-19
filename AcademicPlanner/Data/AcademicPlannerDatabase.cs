@@ -30,6 +30,8 @@ namespace AcademicPlanner.Data
             await _database.CreateTableAsync<Course>();
             await _database.CreateTableAsync<Assessment>();
             await _database.CreateTableAsync<AppUser>();
+            await _database.CreateTableAsync<CourseStatusOption>();
+            await _database.CreateTableAsync<AlertOption>();
 
             _initialized = true;
         }
@@ -232,6 +234,61 @@ namespace AcademicPlanner.Data
                 return await _database!.UpdateAsync(user);
 
             return await _database!.InsertAsync(user);
+        }
+
+        // alerts and course status
+        public async Task<List<CourseStatusOption>> GetCourseStatusOptionsAsync()
+        {
+            await InitAsync();
+            return await _database!
+                .Table<CourseStatusOption>()
+                .OrderBy(o => o.SortOrder)
+                .ToListAsync();
+        }
+
+        public async Task<List<AlertOption>> GetAlertOptionsAsync()
+        {
+            await InitAsync();
+            return await _database!
+                .Table<AlertOption>()
+                .OrderBy(o => o.SortOrder)
+                .ToListAsync();
+        }
+
+        public async Task EnsureCourseStatusOptionAsync(string name, int sortOrder)
+        {
+            await InitAsync();
+
+            var existing = await _database!
+                .Table<CourseStatusOption>()
+                .FirstOrDefaultAsync(o => o.Name == name);
+
+            if (existing is not null)
+                return;
+
+            await _database!.InsertAsync(new CourseStatusOption
+            {
+                Name = name,
+                SortOrder = sortOrder
+            });
+        }
+
+        public async Task EnsureAlertOptionAsync(string name, int sortOrder)
+        {
+            await InitAsync();
+
+            var existing = await _database!
+                .Table<AlertOption>()
+                .FirstOrDefaultAsync(o => o.Name == name);
+
+            if (existing is not null)
+                return;
+
+            await _database!.InsertAsync(new AlertOption
+            {
+                Name = name,
+                SortOrder = sortOrder
+            });
         }
     }
 }

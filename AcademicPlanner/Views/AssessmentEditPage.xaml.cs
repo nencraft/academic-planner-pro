@@ -11,6 +11,7 @@ public partial class AssessmentEditPage : ContentPage
 {
     private readonly AcademicPlannerDatabase _database;
     private readonly INotificationManagerService _notificationService;
+    private bool _optionsLoaded;
 
     private int _courseId;
     private int _assessmentId;
@@ -55,6 +56,8 @@ public partial class AssessmentEditPage : ContentPage
 
     private async Task LoadAssessmentAsync()
     {
+        await EnsurePickerOptionsLoadedAsync();
+
         var assessment = await _database.GetAssessmentAsync(_assessmentId);
         if (assessment is null)
             return;
@@ -199,5 +202,20 @@ public partial class AssessmentEditPage : ContentPage
     private async void OnHomeClicked(object? sender, EventArgs e)
     {
         await Shell.Current.GoToAsync("//TermsPage");
+    }
+    private async Task EnsurePickerOptionsLoadedAsync()
+    {
+        if (_optionsLoaded)
+            return;
+
+        var alertOptions = await _database.GetAlertOptionsAsync();
+        AlertSettingPicker.ItemsSource = alertOptions.Select(o => o.Name).ToList();
+
+        _optionsLoaded = true;
+    }
+    protected override async void OnAppearing()
+    {
+        base.OnAppearing();
+        await EnsurePickerOptionsLoadedAsync();
     }
 }

@@ -4,52 +4,124 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:models="clr-namespace:AcademicPlanner.Models"
-    Title="Search">
+    BackgroundColor="#EFEFEF"
+    Shell.NavBarIsVisible="False">
 
-    <VerticalStackLayout Padding="20" Spacing="16">
-        <Label
-            FontSize="28"
-            FontAttributes="Bold"
-            Text="Search" />
+    <Grid RowDefinitions="Auto,Auto,*">
 
-        <Entry
-            x:Name="SearchEntry"
-            Placeholder="Search terms, courses, or assessments" />
+        <Grid
+            Grid.Row="0"
+            Padding="16,12,16,8"
+            BackgroundColor="White"
+            ColumnDefinitions="56,*,56"
+            ColumnSpacing="16">
 
-        <Button
-            Text="Search"
-            Clicked="OnSearchClicked" />
+            <ImageButton
+                Grid.Column="0"
+                Padding="0"
+                Aspect="AspectFit"
+                BackgroundColor="Transparent"
+                Clicked="OnBackClicked"
+                HeightRequest="48"
+                HorizontalOptions="Center"
+                Source="icon_back.png"
+                VerticalOptions="Center"
+                WidthRequest="48" />
 
-        <CollectionView x:Name="ResultsCollectionView" SelectionMode="None">
-            <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="models:PlannerItem">
-                    <Border
-                        Margin="0,6"
-                        Padding="12"
-                        BackgroundColor="#F5F5F5"
-                        StrokeThickness="0">
-                        <VerticalStackLayout Spacing="6">
-                            <Label
-                                FontAttributes="Bold"
-                                FontSize="18"
-                                Text="{Binding Title}" />
+            <ImageButton
+                Grid.Column="1"
+                Padding="0"
+                Aspect="AspectFit"
+                BackgroundColor="Transparent"
+                Clicked="OnHomeClicked"
+                HeightRequest="56"
+                HorizontalOptions="Center"
+                Source="wgu_owl.png"
+                VerticalOptions="Center"
+                WidthRequest="56" />
+        </Grid>
 
-                            <Label
-                                FontSize="14"
-                                Text="{Binding ItemType}" />
+        <Border
+            Grid.Row="1"
+            Padding="16,10"
+            BackgroundColor="#002f51"
+            StrokeThickness="0">
+            <Grid
+                ColumnDefinitions="*"
+                HorizontalOptions="Center">
 
-                            <Label
-                                FontSize="14"
-                                Text="{Binding Subtitle}" />
+                <Label
+                    x:Name="BannerTitleLabel"
+                    FontAttributes="Bold"
+                    FontSize="22"
+                    HorizontalTextAlignment="Center"
+                    LineBreakMode="TailTruncation"
+                    MaxLines="2"
+                    MaximumWidthRequest="260"
+                    Text="Search"
+                    TextColor="White"
+                    VerticalTextAlignment="Center" />
+            </Grid>
+        </Border>
 
-                            <Button
-                                Text="Open"
-                                Clicked="OnOpenResultClicked"
-                                CommandParameter="{Binding NavigationRoute}" />
-                        </VerticalStackLayout>
-                    </Border>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
-    </VerticalStackLayout>
+        <VerticalStackLayout
+            Grid.Row="2"
+            Padding="20"
+            Spacing="16">
+
+            <Entry
+                x:Name="SearchEntry"
+                Placeholder="Search terms, courses, or assessments" />
+
+            <Button
+                    Margin="0,12,0,0"
+                    BackgroundColor="#F5F5F5"
+                    BorderColor="Black"
+                    BorderWidth="2"
+                    Clicked="OnSearchClicked"
+                    CornerRadius="16"
+                    FontSize="16"
+                    HeightRequest="58"
+                    ImageSource="icon_search.png"
+                    Text="Search"
+                    TextColor="Black"
+                    WidthRequest="220"/>
+
+            <CollectionView
+                x:Name="ResultsCollectionView"
+                SelectionMode="None">
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:PlannerItem">
+                        <Border
+                            Margin="0,6"
+                            Padding="12"
+                            BackgroundColor="#F5F5F5"
+                            StrokeThickness="0">
+
+                            <VerticalStackLayout Spacing="6">
+                                <Label
+                                    FontAttributes="Bold"
+                                    FontSize="18"
+                                    Text="{Binding Title}" />
+
+                                <Label
+                                    FontSize="14"
+                                    Text="{Binding ItemType}" />
+
+                                <Label
+                                    FontSize="14"
+                                    Text="{Binding Subtitle}" />
+
+                                <Button
+                                    Text="Open"
+                                    Clicked="OnOpenResultClicked"
+                                    CommandParameter="{Binding NavigationRoute}" />
+                            </VerticalStackLayout>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </VerticalStackLayout>
+    </Grid>
 </ContentPage>

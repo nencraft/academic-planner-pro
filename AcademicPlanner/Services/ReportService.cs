@@ -19,11 +19,40 @@ public class ReportService
 
     public async Task<List<ReportRow>> GetUpcomingAcademicActivityReportAsync()
     {
+        var plannerItems = await BuildValidPlannerItemsAsync();
+
+        DateTime today = DateTime.Today;
+
+        return plannerItems
+            .Where(i => i.EndDate.Date >= today) // keeps current and upcoming items
+            .OrderBy(i => i.StartDate)
+            .Select(i => i.ToReportRow())
+            .ToList();
+    }
+
+    private async Task<List<PlannerItem>> BuildValidPlannerItemsAsync()
+    {
         var terms = await _database.GetTermsAsync();
         var courses = await _database.GetAllCoursesAsync();
         var assessments = await _database.GetAllAssessmentsAsync();
 
-        var courseMap = courses.ToDictionary(c => c.Id, c => c.Title);
+        var validTermIds = terms
+            .Select(t => t.Id)
+            .ToHashSet();
+
+        var validCourses = courses
+            .Where(c => validTermIds.Contains(c.TermId))
+            .ToList();
+
+        var validCourseIds = validCourses
+            .Select(c => c.Id)
+            .ToHashSet();
+
+        var validAssessments = assessments
+            .Where(a => validCourseIds.Contains(a.CourseId))
+            .ToList();
+
+        var courseMap = validCourses.ToDictionary(c => c.Id, c => c.Title);
 
         var plannerItems = new List<PlannerItem>();
 
@@ -35,7 +64,7 @@ public class ReportService
             EndDate = t.EndDate
         }));
 
-        plannerItems.AddRange(courses.Select(c => new CoursePlannerItem
+        plannerItems.AddRange(validCourses.Select(c => new CoursePlannerItem
         {
             SourceId = c.Id,
             Title = c.Title,
@@ -45,21 +74,16 @@ public class ReportService
             InstructorName = c.InstructorName
         }));
 
-        plannerItems.AddRange(assessments.Select(a => new AssessmentPlannerItem
+        plannerItems.AddRange(validAssessments.Select(a => new AssessmentPlannerItem
         {
             SourceId = a.Id,
             Title = a.Title,
             StartDate = a.StartDate,
             EndDate = a.EndDate,
             AssessmentType = a.Type,
-            ParentCourseTitle = courseMap.TryGetValue(a.CourseId, out var courseTitle)
-                ? courseTitle
-                : "Unknown Course"
+            ParentCourseTitle = courseMap[a.CourseId]
         }));
 
-        return plannerItems
-            .OrderBy(i => i.StartDate)
-            .Select(i => i.ToReportRow())
-            .ToList();
+        return plannerItems;
     }
 }

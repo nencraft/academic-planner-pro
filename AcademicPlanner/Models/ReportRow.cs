@@ -12,7 +12,7 @@ public class ReportRow
 
     public string Title { get; set; } = string.Empty;
 
-    public string Parent { get; set; } = string.Empty;
+    public string Context { get; set; } = string.Empty;
 
     public string StartDate { get; set; } = string.Empty;
 

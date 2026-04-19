@@ -28,7 +28,7 @@ public abstract class PlannerItem
         {
             ItemType = ItemType,
             Title = Title,
-            Parent = Subtitle,
+            Context = Subtitle,
             StartDate = StartDate.ToString("MM/dd/yyyy"),
             EndDate = EndDate.ToString("MM/dd/yyyy"),
             Status = string.Empty

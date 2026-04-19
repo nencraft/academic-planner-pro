@@ -19,62 +19,80 @@ public class SearchService
 
     public async Task<List<PlannerItem>> SearchAsync(string query)
     {
-        query = query?.Trim().ToLowerInvariant() ?? string.Empty;
+        query = query?.Trim() ?? string.Empty;
 
+        var plannerItems = await BuildValidPlannerItemsAsync();
+
+        if (string.IsNullOrWhiteSpace(query))
+        {
+            return plannerItems
+                .OrderBy(i => i.StartDate)
+                .ToList();
+        }
+
+        return plannerItems
+            .Where(i =>
+                i.Title.Contains(query, StringComparison.OrdinalIgnoreCase) ||
+                i.ItemType.Contains(query, StringComparison.OrdinalIgnoreCase) ||
+                i.Subtitle.Contains(query, StringComparison.OrdinalIgnoreCase))
+            .OrderBy(i => i.StartDate)
+            .ToList();
+    }
+
+    private async Task<List<PlannerItem>> BuildValidPlannerItemsAsync()
+    {
         var terms = await _database.GetTermsAsync();
         var courses = await _database.GetAllCoursesAsync();
         var assessments = await _database.GetAllAssessmentsAsync();
 
-        var termResults = terms
-            .Where(t => string.IsNullOrWhiteSpace(query) || t.Title.ToLowerInvariant().Contains(query))
-            .Select(t => new TermPlannerItem
-            {
-                SourceId = t.Id,
-                Title = t.Title,
-                StartDate = t.StartDate,
-                EndDate = t.EndDate
-            });
+        var validTermIds = terms
+            .Select(t => t.Id)
+            .ToHashSet();
 
-        var courseResults = courses
-            .Where(c =>
-                string.IsNullOrWhiteSpace(query) ||
-                c.Title.ToLowerInvariant().Contains(query) ||
-                c.InstructorName.ToLowerInvariant().Contains(query) ||
-                c.Status.ToLowerInvariant().Contains(query))
-            .Select(c => new CoursePlannerItem
-            {
-                SourceId = c.Id,
-                Title = c.Title,
-                StartDate = c.StartDate,
-                EndDate = c.EndDate,
-                StatusValue = c.Status,
-                InstructorName = c.InstructorName
-            });
-
-        var courseMap = courses.ToDictionary(c => c.Id, c => c.Title);
-
-        var assessmentResults = assessments
-            .Where(a =>
-                string.IsNullOrWhiteSpace(query) ||
-                a.Title.ToLowerInvariant().Contains(query) ||
-                a.Type.ToLowerInvariant().Contains(query))
-            .Select(a => new AssessmentPlannerItem
-            {
-                SourceId = a.Id,
-                Title = a.Title,
-                StartDate = a.StartDate,
-                EndDate = a.EndDate,
-                AssessmentType = a.Type,
-                ParentCourseTitle = courseMap.TryGetValue(a.CourseId, out var courseTitle)
-                    ? courseTitle
-                    : "Unknown Course"
-            });
-
-        return termResults
-            .Cast<PlannerItem>()
-            .Concat(courseResults)
-            .Concat(assessmentResults)
-            .OrderBy(i => i.StartDate)
+        var validCourses = courses
+            .Where(c => validTermIds.Contains(c.TermId))
             .ToList();
+
+        var validCourseIds = validCourses
+            .Select(c => c.Id)
+            .ToHashSet();
+
+        var validAssessments = assessments
+            .Where(a => validCourseIds.Contains(a.CourseId))
+            .ToList();
+
+        var courseMap = validCourses.ToDictionary(c => c.Id, c => c.Title);
+
+        var plannerItems = new List<PlannerItem>();
+
+        plannerItems.AddRange(terms.Select(t => new TermPlannerItem
+        {
+            SourceId = t.Id,
+            Title = t.Title,
+            StartDate = t.StartDate,
+            EndDate = t.EndDate
+        }));
+
+        plannerItems.AddRange(validCourses.Select(c => new CoursePlannerItem
+        {
+            SourceId = c.Id,
+            Title = c.Title,
+            StartDate = c.StartDate,
+            EndDate = c.EndDate,
+            StatusValue = c.Status,
+            InstructorName = c.InstructorName
+        }));
+
+        plannerItems.AddRange(validAssessments.Select(a => new AssessmentPlannerItem
+        {
+            SourceId = a.Id,
+            Title = a.Title,
+            StartDate = a.StartDate,
+            EndDate = a.EndDate,
+            AssessmentType = a.Type,
+            ParentCourseTitle = courseMap[a.CourseId]
+        }));
+
+        return plannerItems;
     }
 }

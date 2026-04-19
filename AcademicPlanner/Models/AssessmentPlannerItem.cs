@@ -24,7 +24,7 @@ public class AssessmentPlannerItem : PlannerItem
         {
             ItemType = ItemType,
             Title = Title,
-            Parent = ParentCourseTitle,
+            Context = ParentCourseTitle,
             StartDate = StartDate.ToString("MM/dd/yyyy"),
             EndDate = EndDate.ToString("MM/dd/yyyy"),
             Status = AssessmentType

@@ -24,7 +24,7 @@ public class CoursePlannerItem : PlannerItem
         {
             ItemType = ItemType,
             Title = Title,
-            Parent = InstructorName,
+            Context = InstructorName,
             StartDate = StartDate.ToString("MM/dd/yyyy"),
             EndDate = EndDate.ToString("MM/dd/yyyy"),
             Status = StatusValue

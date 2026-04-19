@@ -26,4 +26,13 @@ public partial class SearchPage : ContentPage
 
         await Shell.Current.GoToAsync(route);
     }
+    private async void OnBackClicked(object sender, EventArgs e)
+    {
+        await Shell.Current.GoToAsync("..");
+    }
+
+    private async void OnHomeClicked(object sender, EventArgs e)
+    {
+        await Shell.Current.GoToAsync("//TermsPage");
+    }
 }

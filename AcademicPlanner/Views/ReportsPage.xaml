@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="AcademicPlanner.Views.ReportsPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:models="clr-namespace:AcademicPlanner.Models"
+    Title="Reports">
+
+    <VerticalStackLayout Padding="20" Spacing="16">
+        <Label
+            FontAttributes="Bold"
+            FontSize="28"
+            Text="Upcoming Academic Activity Report" />
+
+        <Label
+            x:Name="TimestampLabel"
+            FontSize="14"
+            TextColor="Gray" />
+
+        <CollectionView x:Name="ReportCollectionView" SelectionMode="None">
+            <CollectionView.Header>
+                <Grid Padding="0,0,0,8" ColumnDefinitions="90,*,120,100,100,120">
+                    <Label FontAttributes="Bold" Text="Type" />
+                    <Label
+                        Grid.Column="1"
+                        FontAttributes="Bold"
+                        Text="Title" />
+                    <Label
+                        Grid.Column="2"
+                        FontAttributes="Bold"
+                        Text="Parent" />
+                    <Label
+                        Grid.Column="3"
+                        FontAttributes="Bold"
+                        Text="Start" />
+                    <Label
+                        Grid.Column="4"
+                        FontAttributes="Bold"
+                        Text="End" />
+                    <Label
+                        Grid.Column="5"
+                        FontAttributes="Bold"
+                        Text="Status" />
+                </Grid>
+            </CollectionView.Header>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:ReportRow">
+                    <Grid Padding="0,4" ColumnDefinitions="90,*,120,100,100,120">
+                        <Label Text="{Binding ItemType}" />
+                        <Label Grid.Column="1" Text="{Binding Title}" />
+                        <Label Grid.Column="2" Text="{Binding Parent}" />
+                        <Label Grid.Column="3" Text="{Binding StartDate}" />
+                        <Label Grid.Column="4" Text="{Binding EndDate}" />
+                        <Label Grid.Column="5" Text="{Binding Status}" />
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </VerticalStackLayout>
+</ContentPage>

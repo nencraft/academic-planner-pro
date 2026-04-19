@@ -56,4 +56,9 @@ public partial class TermsPage : ContentPage
     {
         await Shell.Current.GoToAsync("//TermsPage");
     }
+
+    private async void OnSettingsClicked(object? sender, EventArgs e)
+    {
+        await Shell.Current.GoToAsync(nameof(SettingsPage));
+    }
 }

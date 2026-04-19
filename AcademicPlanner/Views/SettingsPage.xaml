@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="AcademicPlanner.Views.SettingsPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Settings">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="24" Spacing="16">
+            <Label
+                FontAttributes="Bold"
+                FontSize="28"
+                Text="Pin Unlock" />
+
+            <Label
+                x:Name="PinStatusLabel"
+                FontSize="16"
+                Text="PIN unlock is currently disabled." />
+
+            <Entry
+                x:Name="PinEntry"
+                Keyboard="Numeric"
+                MaxLength="4"
+                Placeholder="Enter 4-digit PIN" />
+
+
+            <Button
+                x:Name="SavePinButton"
+                Margin="0,12,0,0"
+                BackgroundColor="#F5F5F5"
+                BorderColor="Black"
+                BorderWidth="2"
+                Clicked="OnSavePinClicked"
+                CornerRadius="16"
+                FontSize="16"
+                HeightRequest="58"
+                ImageSource="icon_save.png"
+                Text="Enable Pin Unlock"
+                TextColor="Black" />
+            <Button
+                x:Name="DisablePinButton"
+                Margin="0,12,0,0"
+                BackgroundColor="#F5F5F5"
+                BorderColor="Black"
+                BorderWidth="2"
+                Clicked="OnDisablePinClicked"
+                CornerRadius="16"
+                FontSize="16"
+                HeightRequest="58"
+                ImageSource="icon_delete.png"
+                Text="Disable Pin Unlock"
+                TextColor="Black" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

@@ -28,6 +28,18 @@
                 WidthRequest="56" />
 
             <ImageButton
+                Grid.Column="0"
+                Aspect="AspectFit"
+                Padding="0"
+                BackgroundColor="Transparent"
+                Clicked="OnSettingsClicked"
+                HeightRequest="48"
+                HorizontalOptions="Center"
+                Source="icon_settings.png"
+                VerticalOptions="Center"
+                WidthRequest="48" />
+
+            <ImageButton
                 Grid.Column="2"
                 Margin="0"
                 Padding="0"

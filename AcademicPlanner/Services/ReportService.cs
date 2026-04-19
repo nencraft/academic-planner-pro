@@ -86,4 +86,44 @@ public class ReportService
 
         return plannerItems;
     }
+    public async Task<string> ExportReportRowsToCsvAsync(IEnumerable<ReportRow> rows)
+    {
+        var safeRows = rows?.ToList() ?? new List<ReportRow>();
+
+        string timestamp = DateTime.Now.ToString("yyyyMMdd-HHmmss");
+        string fileName = $"upcoming-academic-activity-report-{timestamp}.csv";
+        string filePath = Path.Combine(FileSystem.CacheDirectory, fileName);
+
+        var sb = new StringBuilder();
+
+        // header row
+        sb.AppendLine("Type,Title,Context,Start Date,End/Due Date,Status");
+
+        foreach (var row in safeRows)
+        {
+            sb.Append(EscapeCsv(row.ItemType)).Append(",");
+            sb.Append(EscapeCsv(row.Title)).Append(",");
+            sb.Append(EscapeCsv(row.Context)).Append(",");
+            sb.Append(EscapeCsv(row.StartDate)).Append(",");
+            sb.Append(EscapeCsv(row.EndDate)).Append(",");
+            sb.Append(EscapeCsv(row.Status)).AppendLine();
+        }
+
+        await File.WriteAllTextAsync(filePath, sb.ToString());
+
+        return filePath;
+    }
+    private static string EscapeCsv(string? value)
+    {
+        value ??= string.Empty;
+
+        if (value.Contains(",") || value.Contains("\"") || value.Contains("\n"))
+        {
+            value = value.Replace("\"", "\"\"");
+            return $"\"{value}\"";
+        }
+
+        return value;
+    }
+
 }

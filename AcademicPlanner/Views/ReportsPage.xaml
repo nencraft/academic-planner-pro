@@ -71,11 +71,14 @@
                     HorizontalTextAlignment="Center"
                     Text="Upcoming Academic Activity Report" />
 
-
                 <Label
-                    x:Name="TimestampLabel"
-                    FontSize="14"
-                    TextColor="Gray" />
+    x:Name="TimestampLabel"
+    FontSize="14"
+    TextColor="Gray" />
+
+                <Button
+    Text="Export Report"
+    Clicked="OnExportReportClicked" />
 
                 <CollectionView x:Name="ReportCollectionView" SelectionMode="None">
 

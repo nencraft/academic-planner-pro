@@ -364,7 +364,7 @@
                     ImageSource="icon_delete.png"
                     Text="Delete Course"
                     TextColor="Black"
-                    WidthRequest="220"/>
+                    WidthRequest="220" />
 
             </VerticalStackLayout>
         </ScrollView>

@@ -73,11 +73,6 @@ public partial class SettingsPage : ContentPage
         await RefreshUiAsync();
     }
 
-    private async void OnBackClicked(object sender, EventArgs e)
-    {
-        await Shell.Current.GoToAsync("..");
-    }
-
     private async void OnLogoutClicked(object sender, EventArgs e)
     {
         bool confirm = await DisplayAlert(
@@ -90,5 +85,14 @@ public partial class SettingsPage : ContentPage
             return;
 
         Application.Current!.Windows[0].Page = new LoginPage(_authService);
+    }
+    private async void OnBackClicked(object sender, EventArgs e)
+    {
+        await Shell.Current.GoToAsync("..");
+    }
+
+    private async void OnHomeClicked(object sender, EventArgs e)
+    {
+        await Shell.Current.GoToAsync("//TermsPage");
     }
 }
